@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: faction-recruitment
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    plan: starter
+    disk:
+      name: faction-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_PATH
+        value: /var/data/applications.db
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ORG_NAME
+        value: 돌핀 보안국
+      - key: ORG_SUBTITLE
+        value: 돌핀 보안국과 함께할 새로운 인재를 모집합니다.
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
